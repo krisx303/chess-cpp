@@ -22,7 +22,7 @@ public:
     }
 
     bool hasEnded() override {
-        return Generator::hasEnded() || (generators.size() == index && generators[generators.size() - 1]->hasEnded());
+        return Generator::hasEnded() || (generators.size() >= index-1 && generators[generators.size() - 1]->hasEnded());
     }
 
     Vector2 getNextMovePosition() override {
@@ -35,6 +35,10 @@ public:
     bool skipToNextGenerator() override {
         if (generators[index]->skipToNextGenerator()) {
             index++;
+            if(index == generators.size()) {
+                Generator::setEnded();
+                setEnded();
+            }
             return true;
         }
         return false;
@@ -46,9 +50,11 @@ public:
     }
 
     void reset() override {
+        index = 0;
         for (const auto &item: generators) {
             item->reset();
         }
+        Generator::reset();
     }
 
 };

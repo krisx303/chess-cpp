@@ -16,6 +16,8 @@ public:
 
     void setEnded() { end = true; }
 
+    void setNotEnded() {end = false;}
+
     virtual void reset() {
         end = false;
     }

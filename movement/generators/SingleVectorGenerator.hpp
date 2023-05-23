@@ -15,7 +15,7 @@ public:
     ~SingleVectorGenerator() override = default;
 
     bool hasEnded() override {
-        if(curr_distance_ == distance_){
+        if (curr_distance_ == distance_) {
             setEnded();
         }
         return Generator::hasEnded();
@@ -31,8 +31,9 @@ public:
         return distance_ == -1;
     }
 
-    void reset() override{
+    void reset() override {
         curr_distance_ = 0;
-        Generator::hasEnded();
+        Generator::setNotEnded();
+        setNotEnded();
     }
 };

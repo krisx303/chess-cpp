@@ -12,6 +12,8 @@ private:
 public:
     explicit Pawn(const Vector2 &position, PlayerColor color) : position_(position), color_(color) {}
 
+    virtual ~Pawn() = default;
+
     Vector2 getPosition() const { return position_; }
 
     PlayerColor getColor() const { return color_; }

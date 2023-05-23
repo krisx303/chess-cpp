@@ -9,28 +9,9 @@
 using std::cout;
 using std::endl;
 
-class Parent {
-public:
-    virtual std::list<int> &getList() {
-        static std::list<int> myList;
-        return myList;
-    }
 
-    void addToList(int x) {
-        getList().push_back(x);
-    }
-};
-
-class Child : public Parent {
-public:
-    std::list<int> &getList() override {
-        static std::list<int> myList;
-        return myList;
-    }
-};
-
-void fulfillBoard(Board& board) {
-    for(int i = 0;i<BOARD_SIZE;++i) {
+void fulfillBoard(Board &board) {
+    for (int i = 0; i < BOARD_SIZE; ++i) {
         board.addPawn(new NormalPawn(Vector2(i, 1), PlayerColor::WHITE));
     }
     board.addPawn(new Rook(Vector2(0, 0), PlayerColor::WHITE));
@@ -42,18 +23,15 @@ void fulfillBoard(Board& board) {
 int main() {
     Board board;
     fulfillBoard(board);
-    auto *generator = board.getPawnAtPosition(Vector2(1, 0))->getMovementGenerator();
+    auto positions = board.getAttacksFromPositions(Vector2(1, 1));
 
-    while (!generator->hasEnded()) {
-        Vector2 vector = Vector2(1, 0) + generator->getNextMovePosition();
-        if (board.isOutsideArea(vector) || board.isOccupied(vector, PlayerColor::WHITE)) {
-            generator->skipToNextGenerator();
-            continue;
-        }
-        cout << vector << endl;
-    }
+    for (const auto &item: positions)
+        cout << item << endl;
 
-    generator->reset();
+    positions = board.getAttacksFromPositions(Vector2(0, 0));
+
+    for (const auto &item: positions)
+        cout << item << endl;
 
     return 0;
 }
