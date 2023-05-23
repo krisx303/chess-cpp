@@ -1,0 +1,11 @@
+#ifndef CHESS_PLAYERCOLOR_HPP
+#define CHESS_PLAYERCOLOR_HPP
+
+
+enum PlayerColor{
+    WHITE,
+    BLACK
+};
+
+
+#endif //CHESS_PLAYERCOLOR_HPP
