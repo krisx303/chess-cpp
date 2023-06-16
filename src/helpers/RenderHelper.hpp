@@ -33,20 +33,27 @@ public:
 
     void setFontSize(int size);
 
+    void renderTexture(float x, float y, sf::Texture &texture, float d);
+
+    void renderRawSprite(float x, float y, sf::Sprite &sprite, float scale);
+
+    void renderCircle(float x, float y, float radius, sf::Color color);
+
 private:
     // private constructor
     RenderHelper();
 
-    float calculateStartXOnCenter(const std::string &string, float x, float width);
+    float calculateStartXOnCenter(const std::string &string, float x, float width) const;
 
     void renderText(RenderSide side, const std::string& string, float maxWidth, float x, float y, const sf::Color& color);
 
     // instance of the object
     static RenderHelper s_Instance;
-    sf::RenderWindow* window;
-    sf::Texture* font;
+    sf::RenderWindow* window{};
+    sf::Texture* font{};
     sf::Color defaultColor, selectedColor;
-    int fontSize;
+    int fontSize{};
 
-    float calculateStartXOnRight(const std::string &string, float width);
+    float calculateStartXOnRight(const std::string &string, float width) const;
+
 };

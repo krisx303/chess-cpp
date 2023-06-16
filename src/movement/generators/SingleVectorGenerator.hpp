@@ -36,4 +36,8 @@ public:
         Generator::setNotEnded();
         setNotEnded();
     }
+
+    void print(std::ostream &os) const override {
+        os << "SingleVectorGenerator[" << direction_ << ", " << distance_ << ", " << curr_distance_ << "]";
+    }
 };

@@ -2,25 +2,16 @@
 
 #include "Pawn.hpp"
 #include "../movement/generators/CompositeGenerator.hpp"
+#include "../movement/generators/RotationGenerator.hpp"
 
 class Knight : public Pawn {
 private:
-    static Generator *movement;
-    static Generator *attack;
+    static Generator* createMovementGenerator();
+    static Generator* createAttackGenerator();
 
 public:
-    Knight(const Vector2 &position, PlayerColor color) : Pawn(position, color) {}
+    Knight(const Vector2& position, PlayerColor color) : Pawn(position, color, 3) {}
 
-    Generator *getMovementGenerator() override {
-        return movement;
-    }
-
-    Generator *getAttackGenerator() override {
-        return attack;
-    }
+    Generator* getMovementGenerator() override;
+    Generator* getAttackGenerator() override;
 };
-
-Generator* Knight::movement = (new CompositeGenerator())
-        ->addGenerator(new RotationGenerator(Vector2(2, 1), 1))
-        ->addGenerator(new RotationGenerator(Vector2(2, -1), 1));
-Generator* Knight::attack = Knight::movement;

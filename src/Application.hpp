@@ -26,11 +26,7 @@ public:
 
     bool isRunning() const;
 
-    void requestChangePanel(Panel_ID panelId);
-
     void resizeScreen(float width, float height);
-
-    void requestFullScreenUpdate();
 
 private:
 
@@ -40,16 +36,16 @@ private:
     // instance of the object
     static Application s_Instance;
 
-    sf::RenderWindow *window;
+    sf::RenderWindow *window{};
 
     sf::VideoMode videoMode;
-    Panel *panel;
+    Panel *panel{};
 
     void initVariables();
 
     void initWindow();
 
-    void loadResources();
+    static void loadResources();
 
     void initComponents();
 

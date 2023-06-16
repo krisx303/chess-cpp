@@ -53,7 +53,13 @@ public:
 
     void reset() override {
         counter = 0;
-        generator->reset();
+        delete generator;
+        direction_ = direction_.rotate();
+        generator = new SingleVectorGenerator(direction_, radius_);
         Generator::reset();
+    }
+
+    void print(std::ostream &os) const override {
+        os << "RotationGenerator[" << direction_ << ", " << counter << ", " << radius_ << "]";
     }
 };

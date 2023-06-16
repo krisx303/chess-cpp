@@ -7,24 +7,20 @@
      * */
 
 #include <SFML/Window/Event.hpp>
-enum Panel_ID {
-    MAIN_MENU = 0,
-    GAME = 1,
-    OPTIONS_MENU = 2
-};
 
 class Panel {
 public:
     sf::RenderWindow *window;
-    sf::Event event;
+    sf::Event event{};
+    sf::Vector2f previousPos, dragDropStartPos;
 
-    Panel(Panel_ID id, sf::RenderWindow *win);
+    explicit Panel(sf::RenderWindow *win);
 
-    virtual void update();
+    virtual void update() = 0;
 
     virtual void input();
 
-    virtual void render();
+    virtual void render() = 0;
 
     virtual void onCloseRequest();
 
@@ -34,6 +30,16 @@ public:
 
     virtual void onKeyReleased(sf::Keyboard::Key key);
 
+    virtual void onMousePressed(sf::Mouse::Button button, sf::Vector2f pos);
+
+    virtual void onMouseReleased(sf::Mouse::Button button, sf::Vector2f pos);
+
+    virtual void onMouseDragDrop(sf::Vector2f startPos, sf::Vector2f endPos);
+
+    virtual void onMouseMoved(sf::Vector2f prevPos, sf::Vector2f currPos);
+
 private:
-    Panel_ID PANEL_ID;
+    sf::Vector2f getClickedVector(sf::Event::MouseMoveEvent moveEvent) const;
+
+    sf::Vector2f getClickedVector(sf::Event::MouseButtonEvent buttonEvent) const;
 };

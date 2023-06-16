@@ -16,7 +16,10 @@ add_executable(chess main.cpp src/Vector2.hpp src/Vector2.cpp src/movement/gener
         src/movement/generators/CompositeGenerator.hpp src/board/Pawn.hpp
         src/board/NormalPawn.hpp src/board/Knight.hpp
         src/helpers/RenderHelper.hpp src/helpers/RenderHelper.cpp
-        src/GlobalResources.hpp src/GlobalResources.cpp src/panels/MenuPanel.hpp src/panels/MenuPanel.cpp
-        src/panels/Panel.cpp src/panels/Panel.hpp)
+        src/GlobalResources.hpp src/GlobalResources.cpp src/panels/GamePanel.hpp src/panels/GamePanel.cpp
+        src/panels/Panel.cpp src/panels/Panel.hpp src/board/Board.hpp src/board/Rook.hpp src/board/PlayerColor.hpp
+        src/board/Bishop.hpp src/board/Queen.hpp src/board/King.hpp src/board/Knight.cpp src/board/King.cpp
+        src/board/Rook.cpp src/board/King.cpp src/board/NormalPawn.cpp src/board/Queen.cpp src/board/Bishop.cpp
+        src/board/PlayerColor.cpp)
 
 target_link_libraries(chess sfml-system sfml-window sfml-graphics sfml-audio)

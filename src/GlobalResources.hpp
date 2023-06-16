@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include "board/PlayerColor.hpp"
 
 using std::string;
 
@@ -16,6 +18,10 @@ public:
 
     sf::Texture& getMainFont();
 
+    sf::Texture &getBoard();
+
+    sf::Sprite getPawnSprite(int typeID, PlayerColor color);
+
     void loadResources();
 
 private:
@@ -27,6 +33,8 @@ private:
     static GlobalResources s_Instance;
 
     sf::Texture mainFont;
+    sf::Texture board;
+    sf::Texture pawns;
 
-    void loadTexture(sf::Texture &texture, const string &path);
+    static void loadTexture(sf::Texture &texture, const string &path);
 };

@@ -1,11 +1,16 @@
-#ifndef CHESS_PLAYERCOLOR_HPP
-#define CHESS_PLAYERCOLOR_HPP
+#pragma once
+
+
+#include <string>
+#include <ostream>
+
+using std::string;
 
 
 enum PlayerColor{
     WHITE,
-    BLACK
+    BLACK,
+    NONE
 };
 
-
-#endif //CHESS_PLAYERCOLOR_HPP
+std::ostream &operator<<(std::ostream &os, PlayerColor color);

@@ -1,11 +1,10 @@
 #include "Application.hpp"
 #include "GlobalResources.hpp"
-//#include "panels/GamePanel.hpp"
 #include "panels/Panel.hpp"
-#include "panels/MenuPanel.hpp"
+#include "panels/GamePanel.hpp"
 
 void Application::start() {
-    this->loadResources();
+    Application::loadResources();
     this->initVariables();
     this->initWindow();
     this->initComponents();
@@ -31,15 +30,15 @@ void Application::loadResources() {
 }
 
 void Application::initWindow() {
-    this->videoMode.height = 3 * 180;
-    this->videoMode.width = 3 * 320;
-    sf::View view(sf::FloatRect(0, 0, 3 * 320, 3 * 180));
-    view.setViewport(sf::FloatRect(0, 0, 3.f, 3.f));
+    this->videoMode.height = 640;
+    this->videoMode.width = 640;
+    sf::View view(sf::FloatRect(0, 0, 640, 640));
+    view.setViewport(sf::FloatRect(0, 0, 1.f, 1.f));
 
     this->window = new sf::RenderWindow(this->videoMode, "Game", sf::Style::Default);
     this->window->setFramerateLimit(60);
     this->window->setView(view);
-    this->panel = new MenuPanel(window);
+    this->panel = new GamePanel(window);
 }
 
 Application::~Application() {
@@ -55,7 +54,7 @@ void Application::update() {
 void Application::render() {
     this->window->clear(sf::Color(0, 0, 0, 255));
     sf::RectangleShape object;
-    object.setSize(sf::Vector2f(320, 180));
+    object.setSize(sf::Vector2f(640, 640));
     object.setFillColor(sf::Color(25, 25, 25, 255));
     this->window->draw(object);
 
@@ -73,26 +72,14 @@ Application::Application() = default;
 // instancing the single instance of the class
 Application Application::s_Instance;
 
-void Application::requestChangePanel(Panel_ID panelId) {
-    switch (panelId) {
-        case MAIN_MENU:
-            this->panel = new MenuPanel(window);
-            break;
-        case GAME:
-            //this->panel = new GamePanel(window);
-            break;
-        case OPTIONS_MENU:
-            //this->panel = new OptionsPanel(window);
-            break;
-    }
-}
-
 void Application::resizeScreen(float width, float height) {
+    sf::FloatRect visibleArea(0.f, 0.f, width, height);
+    this->window->setView(sf::View(visibleArea));
     sf::View view = this->window->getView();
-    float x = width / 320;
-    float y = height / 180;
+    float x = width / 640;
+    float y = height / 640;
     float ratioX = x / y;
-    view.reset(sf::FloatRect(0, 0, 320, 180));
+    view.reset(sf::FloatRect(0, 0, 640, 640));
     if (ratioX <= 1.0f) {
         float h = (float) height * ratioX;
         view.setViewport(sf::FloatRect(0.f, ((float) height - h) / (2 * (float) height) / 3, 1.0f, ratioX));

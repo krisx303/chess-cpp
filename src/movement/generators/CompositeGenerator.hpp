@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Generator.hpp"
-#include "RotationGenerator.hpp"
 #include <vector>
 #include <memory>
+#include <ostream>
 
 using std::vector;
 
@@ -38,8 +38,8 @@ public:
             if(index == generators.size()) {
                 Generator::setEnded();
                 setEnded();
+                return true;
             }
-            return true;
         }
         return false;
     }
@@ -57,4 +57,12 @@ public:
         Generator::reset();
     }
 
+    void print(std::ostream &os) const override {
+        os << "CompositeGenerator[" << index << ", ";
+        for (const auto &item: generators) {
+            item->print(os);
+            os << ", ";
+        }
+        os << "]";
+    }
 };

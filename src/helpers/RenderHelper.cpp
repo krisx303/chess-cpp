@@ -1,3 +1,4 @@
+#include <SFML/Graphics/CircleShape.hpp>
 #include "RenderHelper.hpp"
 
 // instancing the single instance of the class
@@ -43,13 +44,13 @@ void RenderHelper::renderCustomColorText(RenderSide side, const std::string &str
 
 // Private functions
 
-float RenderHelper::calculateStartXOnCenter(const std::string &string, const float x, const float width) {
+float RenderHelper::calculateStartXOnCenter(const std::string &string, const float x, const float width) const {
     size_t w = string.length();
     w = w * this->fontSize;
     return (width - (float) w) / 2 + x;
 }
 
-float RenderHelper::calculateStartXOnRight(const std::string &string, float width) {
+float RenderHelper::calculateStartXOnRight(const std::string &string, float width) const {
     size_t w = string.length();
     w = w * this->fontSize;
     return width - (float) w;
@@ -77,6 +78,27 @@ void RenderHelper::renderText(RenderSide side, const std::string &string, float 
         letter.setTextureRect(sf::IntRect(pos % 11 * 10, 30 + pos / 11 * 10, 10, 10));
         letter.setPosition(x, y);
         this->window->draw(letter);
-        x += this->fontSize;;
+        x += (float) this->fontSize;;
     }
+}
+
+void RenderHelper::renderTexture(float x, float y, sf::Texture &texture, float d) {
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    renderRawSprite(x, y, sprite, d);
+}
+
+void RenderHelper::renderRawSprite(float x, float y, sf::Sprite &sprite, float scale) {
+    sprite.setPosition(x, y);
+    sprite.setScale(scale, scale);
+    this->window->draw(sprite);
+}
+
+void RenderHelper::renderCircle(float x, float y, float radius, sf::Color color) {
+    sf::CircleShape circle;
+    circle.setRadius(radius);
+    circle.setOutlineColor(color);
+    circle.setOutlineThickness(5);
+    circle.setPosition(x, y);
+    this->window->draw(circle);
 }

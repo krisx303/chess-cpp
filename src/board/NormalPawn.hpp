@@ -7,21 +7,24 @@
 class NormalPawn : public Pawn {
 private:
     static Generator *movement;
+    static Generator *movementFirstMove;
     static Generator *attack;
+    bool firstMove = false;
 
 public:
-    NormalPawn(const Vector2 &position, PlayerColor color) : Pawn(position, color) {}
+    NormalPawn(const Vector2 &position, PlayerColor color) : Pawn(position, color, 5) {}
 
     Generator *getMovementGenerator() override {
+        if(!firstMove)
+            return movementFirstMove;
         return movement;
     }
 
     Generator *getAttackGenerator() override {
         return attack;
     }
-};
 
-Generator* NormalPawn::movement = new SingleVectorGenerator(Vector2(0, 1), 1);
-Generator* NormalPawn::attack = (new CompositeGenerator())
-        ->addGenerator(new SingleVectorGenerator(Vector2(-1, 1), 1))
-        ->addGenerator(new SingleVectorGenerator(Vector2(1, 1), 1));
+    void changeState() {
+        firstMove = true;
+    }
+};
